@@ -76,6 +76,7 @@ function App() {
     }
 
     function handleTouchMove(e) {
+        e.preventDefault();
         dragOverHandler(e);
     }
 
