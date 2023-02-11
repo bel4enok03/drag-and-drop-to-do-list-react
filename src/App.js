@@ -86,7 +86,7 @@ function App() {
                 onDragOver={(e) => dragOverHandler(e)}
                 onDrop={(e) => dropHandler(e, board, item)}
             >{item.title}</div>)}
-        </div>)};
+        </div>)}
     </div>);
 }
 
