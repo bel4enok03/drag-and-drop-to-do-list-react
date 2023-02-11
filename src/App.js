@@ -76,7 +76,7 @@ function App() {
             className='board'
             onDragOver={(e) => dragOverHandler(e, board)}
             onDrop={(e) => dropCardHandler(e, board)}>
-            <div className='board-title'>{board.title}</div>
+            <div className='board__title'>{board.title}</div>
             {board.items.map(item => <div
                 className='item'
                 draggable={true}
