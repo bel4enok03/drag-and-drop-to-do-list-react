@@ -29,7 +29,7 @@ function App() {
         e.target.style.boxShadow = 'none'
     }
 
-    function dragOverHandler(e, board, item) {
+    function dragOverHandler(e) {
         e.preventDefault()
         if (e.target.className === 'item') {
             e.target.style.boxShadow = '0 0 0 2px gray'
@@ -74,7 +74,7 @@ function App() {
     return (<div className='app'>
         {boards.map(board => <div
             className='board'
-            onDragOver={(e) => dragOverHandler(e, board)}
+            onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropCardHandler(e, board)}>
             <div className='board__title'>{board.title}</div>
             {board.items.map(item => <div
@@ -83,7 +83,7 @@ function App() {
                 onDragStart={(e) => dragStartHandler(e, board, item)}
                 onDragLeave={(e) => dragEndHandler(e)}
                 onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e, board, item)}
+                onDragOver={(e) => dragOverHandler(e)}
                 onDrop={(e) => dropHandler(e, board, item)}
             >{item.title}</div>)}
         </div>)};
