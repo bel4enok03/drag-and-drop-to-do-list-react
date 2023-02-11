@@ -71,6 +71,19 @@ function App() {
         e.target.style.boxShadow = 'none'
     }
 
+    function handleTouchStart(e, board, item) {
+        dragStartHandler(e, board, item);
+    }
+
+    function handleTouchMove(e) {
+        dragOverHandler(e);
+    }
+
+    function handleTouchEnd(e, board, item) {
+        dropHandler(e, board, item);
+    }
+
+
     return (<div className='app'>
         {boards.map(board => <div
             className='board'
@@ -85,6 +98,9 @@ function App() {
                 onDragEnd={(e) => dragEndHandler(e)}
                 onDragOver={(e) => dragOverHandler(e)}
                 onDrop={(e) => dropHandler(e, board, item)}
+                onTouchStart={(e) => handleTouchStart(e, board, item)}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={(e) => handleTouchEnd(e, board, item)}
             >{item.title}</div>)}
         </div>)}
     </div>);
