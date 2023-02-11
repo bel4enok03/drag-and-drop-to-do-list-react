@@ -85,14 +85,23 @@ function App() {
         e.preventDefault();
         const currentX = e.touches[0].clientX;
         const currentY = e.touches[0].clientY;
-        e.target.style.transform = `translate(${currentX - startX}px, ${currentY - startY}px)`;
+        const boardBounds = e.currentTarget.getBoundingClientRect();
+        if (currentX >= boardBounds.left && currentX <= boardBounds.right &&
+            currentY >= boardBounds.top && currentY <= boardBounds.bottom) {
+            e.target.style.transform = `translate(${currentX - startX}px, ${currentY - startY}px)`;
+        }
         dragOverHandler(e);
     }
 
     function handleTouchEnd(e, board, item) {
         setStartX(null);
         setStartY(null);
-        dropHandler(e, board, item);
+        const boardBounds = e.currentTarget.getBoundingClientRect();
+        const itemBounds = e.target.getBoundingClientRect();
+        if (itemBounds.left >= boardBounds.left && itemBounds.right <= boardBounds.right &&
+            itemBounds.top >= boardBounds.top && itemBounds.bottom <= boardBounds.bottom) {
+            dropHandler(e, board, item);
+        }
     }
 
 
