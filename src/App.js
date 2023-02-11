@@ -19,6 +19,8 @@ function App() {
 
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
+    const [startX, setStartX] = useState(null);
+    const [startY, setStartY] = useState(null);
 
     function dragStartHandler(e, board, item) {
         setCurrentBoard(board);
@@ -72,15 +74,24 @@ function App() {
     }
 
     function handleTouchStart(e, board, item) {
+        setStartX(e.touches[0].clientX);
+        setStartY(e.touches[0].clientY);
+        setCurrentBoard(board);
+        setCurrentItem(item);
         dragStartHandler(e, board, item);
     }
 
     function handleTouchMove(e) {
         e.preventDefault();
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        e.target.style.transform = `translate(${currentX - startX}px, ${currentY - startY}px)`;
         dragOverHandler(e);
     }
 
     function handleTouchEnd(e, board, item) {
+        setStartX(null);
+        setStartY(null);
         dropHandler(e, board, item);
     }
 
@@ -102,6 +113,7 @@ function App() {
                 onTouchStart={(e) => handleTouchStart(e, board, item)}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={(e) => handleTouchEnd(e, board, item)}
+
             >{item.title}</div>)}
         </div>)}
     </div>);
