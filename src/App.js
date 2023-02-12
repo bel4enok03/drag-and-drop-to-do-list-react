@@ -19,8 +19,6 @@ function App() {
 
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentItem, setCurrentItem] = useState(null);
-    const [startX, setStartX] = useState(null);
-    const [startY, setStartY] = useState(null);
 
     function dragStartHandler(e, board, item) {
         setCurrentBoard(board);
@@ -73,38 +71,6 @@ function App() {
         e.target.style.boxShadow = 'none'
     }
 
-    function handleTouchStart(e, board, item) {
-        setStartX(e.touches[0].clientX);
-        setStartY(e.touches[0].clientY);
-        setCurrentBoard(board);
-        setCurrentItem(item);
-        dragStartHandler(e, board, item);
-    }
-
-    function handleTouchMove(e) {
-        e.preventDefault();
-        const currentX = e.touches[0].clientX;
-        const currentY = e.touches[0].clientY;
-        const boardBounds = e.currentTarget.getBoundingClientRect();
-        if (currentX >= boardBounds.left && currentX <= boardBounds.right &&
-            currentY >= boardBounds.top && currentY <= boardBounds.bottom) {
-            e.target.style.transform = `translate(${currentX - startX}px, ${currentY - startY}px)`;
-        }
-        dragOverHandler(e);
-    }
-
-    function handleTouchEnd(e, board, item) {
-        setStartX(null);
-        setStartY(null);
-        const boardBounds = e.currentTarget.getBoundingClientRect();
-        const itemBounds = e.target.getBoundingClientRect();
-        if (itemBounds.left >= boardBounds.left && itemBounds.right <= boardBounds.right &&
-            itemBounds.top >= boardBounds.top && itemBounds.bottom <= boardBounds.bottom) {
-            dropHandler(e, board, item);
-        }
-    }
-
-
     return (<div className='app'>
         {boards.map(board => <div
             className='board'
@@ -119,10 +85,6 @@ function App() {
                 onDragEnd={(e) => dragEndHandler(e)}
                 onDragOver={(e) => dragOverHandler(e)}
                 onDrop={(e) => dropHandler(e, board, item)}
-                onTouchStart={(e) => handleTouchStart(e, board, item)}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={(e) => handleTouchEnd(e, board, item)}
-
             >{item.title}</div>)}
         </div>)}
     </div>);
